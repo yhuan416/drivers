@@ -1,3 +1,0 @@
-[submodule "flashdb/FlashDB"]
-	path = flashdb/FlashDB
-	url = git@github.com:armink/FlashDB.git

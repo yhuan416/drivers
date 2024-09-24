@@ -5,7 +5,7 @@ MODULE_NAME = flashdb
 MODULE_OBJECTS += main.o
 
 # 编译选项
-EXTRA_CFLAGS += -I$(PWD)
+EXTRA_CFLAGS += -DFDB_LKM -I$(PWD)
 CFLAGS_main.o = -DDEBUG
 
 # Toolchain Path
@@ -15,12 +15,22 @@ KERNEL ?= /lib/modules/$(shell uname -r)/build
 # Architecture
 ARCH := arm
 
+FLASHDB_PATH := $(PWD)
+
 PWD := $(shell pwd)
 
 #enable logging by default
 CONFIG_DEBUG_LOGS := y
 
 obj-m := $(MODULE_NAME).o
+
+# porting
+EXTRA_CFLAGS += -I$(FLASHDB_PATH)/porting/inc
+MODULE_OBJECTS += porting/src/fal_flash_lkm_port.o
+
+# fal
+# EXTRA_CFLAGS += -I$(FLASHDB_PATH)/FlashDB/port/fal/inc
+MODULE_OBJECTS += FlashDB/port/fal/src/fal.o FlashDB/port/fal/src/fal_flash.o FlashDB/port/fal/src/fal_partition.o 
 
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 

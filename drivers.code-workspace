@@ -6,7 +6,10 @@
     ],
     "settings": {
         "files.associations": {
-            "module.h": "c"
+            "module.h": "c",
+            "fal.h": "c",
+            "string.h": "c",
+            "fal_cfg.h": "c"
         }
     }
 }
