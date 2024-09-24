@@ -29,13 +29,21 @@ int fal_init(void)
     result = fal_flash_init();
 
     if (result < 0) {
+#ifdef FDB_LKM
         goto label_exit;
+#else
+        goto __exit;
+#endif
     }
 
     /* initialize all flash partition on FAL partition table */
     result = fal_partition_init();
 
+#ifdef FDB_LKM
 label_exit:
+#else
+__exit:
+#endif
 
     if ((result > 0) && (!init_ok))
     {

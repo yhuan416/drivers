@@ -30,7 +30,7 @@ static int init(void)
 
 static int read(long offset, uint8_t *buf, size_t size)
 {
-    int ret;
+    int ret = 0;
 
     LOCK();
 
@@ -41,7 +41,7 @@ static int read(long offset, uint8_t *buf, size_t size)
 
 static int write(long offset, const uint8_t *buf, size_t size)
 {
-    int ret;
+    int ret = 0;
 
     LOCK();
 
@@ -52,8 +52,8 @@ static int write(long offset, const uint8_t *buf, size_t size)
 
 static int erase(long offset, size_t size)
 {
-    int ret;
-    int32_t erase_size = ((size - 1) / FLASH_ERASE_MIN_SIZE) + 1;
+    int ret = 0;
+    // int32_t erase_size = ((size - 1) / FLASH_ERASE_MIN_SIZE) + 1;
 
     LOCK();
 
@@ -62,12 +62,11 @@ static int erase(long offset, size_t size)
     return ret;
 }
 
-const struct fal_flash_dev nor_flash0 =
-    {
-        .name = NOR_FLASH_DEV_NAME,
-        .addr = 0x0,                      // address is relative to beginning of partition; 0x0 is start of the partition
-        .len = 32 * 1024,                 // size of the partition as specified in partitions.csv
-        .blk_size = FLASH_ERASE_MIN_SIZE, // must be 4096 bytes
-        .ops = {init, read, write, erase},
-        .write_gran = 1, // 1 byte write granularity
+const struct fal_flash_dev nor_flash0 = {
+    .name = NOR_FLASH_DEV_NAME,
+    .addr = 0x0,                      // address is relative to beginning of partition; 0x0 is start of the partition
+    .len = 32 * 1024,                 // size of the partition as specified in partitions.csv
+    .blk_size = FLASH_ERASE_MIN_SIZE, // must be 4096 bytes
+    .ops = {init, read, write, erase},
+    .write_gran = 1, // 1 byte write granularity
 };

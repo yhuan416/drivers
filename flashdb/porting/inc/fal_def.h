@@ -1,5 +1,20 @@
+/*
+ * Copyright (c) 2006-2018, RT-Thread Development Team
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2018-05-17     armink       the first version
+ */
+
 #ifndef _FAL_DEF_H_
 #define _FAL_DEF_H_
+
+#ifndef FDB_LKM
+#include <stdint.h>
+#include <stdio.h>
+#endif
 
 #ifdef FDB_USING_NATIVE_ASSERT
 #include <assert.h>
