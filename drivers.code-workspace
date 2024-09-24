@@ -9,7 +9,11 @@
             "module.h": "c",
             "fal.h": "c",
             "string.h": "c",
-            "fal_cfg.h": "c"
+            "fal_cfg.h": "c",
+            "kernel.h": "c",
+            "fdb_low_lvl.h": "c",
+            "flashdb.h": "c",
+            "time.h": "c"
         }
     }
 }

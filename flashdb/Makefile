@@ -32,6 +32,11 @@ MODULE_OBJECTS += porting/src/fal_flash_lkm_port.o
 # EXTRA_CFLAGS += -I$(FLASHDB_PATH)/FlashDB/port/fal/inc
 MODULE_OBJECTS += FlashDB/port/fal/src/fal.o FlashDB/port/fal/src/fal_flash.o FlashDB/port/fal/src/fal_partition.o 
 
+# flashdb
+EXTRA_CFLAGS += -I$(FLASHDB_PATH)/FlashDB/inc
+# MODULE_OBJECTS += FlashDB/src/fdb_file.o FlashDB/src/fdb_kvdb.o FlashDB/src/fdb_tsdb.o FlashDB/src/fdb_utils.o FlashDB/src/fdb.o
+MODULE_OBJECTS += FlashDB/src/fdb_kvdb.o FlashDB/src/fdb_tsdb.o FlashDB/src/fdb_utils.o FlashDB/src/fdb.o
+
 $(MODULE_NAME)-y := $(MODULE_OBJECTS)
 
 .PHONY: clean info

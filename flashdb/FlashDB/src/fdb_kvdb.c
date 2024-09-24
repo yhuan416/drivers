@@ -11,8 +11,11 @@
  * Key-Value Database feature implement source file.
  */
 
+#ifndef FDB_LKM
 #include <inttypes.h>
 #include <string.h>
+#endif
+
 #include <flashdb.h>
 #include <fdb_low_lvl.h>
 

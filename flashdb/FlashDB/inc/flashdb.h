@@ -12,11 +12,19 @@
 #ifndef _FLASHDB_H_
 #define _FLASHDB_H_
 
+#ifdef FDB_LKM
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/types.h>
+#include <linux/string.h>
+#else
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
+#endif
+
 #include <fdb_cfg.h>
 
 #ifdef FDB_USING_FAL_MODE
