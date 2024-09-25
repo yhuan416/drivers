@@ -42,4 +42,65 @@
 /* print debug information */
 #define FDB_DEBUG_ENABLE
 
+#ifdef FDB_LKM
+
+#include <linux/kernel.h>
+#include <linux/types.h>
+#include <linux/string.h>
+#include <linux/errno.h>
+#include <linux/limits.h>
+#include <linux/stddef.h>
+
+#define PRId8   "d"
+#define PRId16  "d"
+#define PRId32  "d"
+#define PRId64  "lld"
+#define PRIdMAX "lld" // 或 "ld"，取决于 MAX 的定义
+
+#define PRIi8   "i"
+#define PRIi16  "i"
+#define PRIi32  "i"
+#define PRIi64  "lli"
+#define PRIiMAX "lli" // 或 "li"，取决于 MAX 的定义
+
+#define PRIu8   "u"
+#define PRIu16  "u"
+#define PRIu32  "u"
+#define PRIu64  "llu"
+#define PRIuMAX "llu" // 或 "lu"，取决于 MAX 的定义
+
+#define PRIx8   "x"
+#define PRIx16  "x"
+#define PRIx32  "x"
+#define PRIx64  "llx"
+#define PRIxMAX "llx" // 或 "lx"，取决于 MAX 的定义
+
+#define PRIX8   "X"
+#define PRIX16  "X"
+#define PRIX32  "X"
+#define PRIX64  "llX"
+#define PRIXMAX "llX" // 或 "lX"，取决于 MAX 的定义
+
+#define PRIdLEAST16 "d"
+#define PRIuLEAST16 "u"
+
+typedef u8 uint8_t;
+typedef u16 uint16_t;
+typedef u32 uint32_t;
+typedef u64 uint64_t;
+
+#define UINT32_MAX (0xFFFFFFFFU)
+
+typedef long long int intmax_t; // 定义 intmax_t 为内核的 __intmax_t
+
+#ifndef FDB_PRINT
+#define FDB_PRINT(...) printk(__VA_ARGS__)
+#endif
+
+#include <uapi/asm-generic/errno-base.h>
+
+#else /* FDB_LKM */
+#include<sys/ioctl.h>
+#endif
+
 #endif /* _FDB_CFG_H_ */

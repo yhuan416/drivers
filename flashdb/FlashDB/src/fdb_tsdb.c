@@ -13,8 +13,11 @@
  * TSL is time series log, the TSDB saved many TSLs.
  */
 
+#ifndef FDB_LKM
 #include <inttypes.h>
 #include <string.h>
+#endif
+
 #include <flashdb.h>
 #include <fdb_low_lvl.h>
 
@@ -563,14 +566,26 @@ void fdb_tsl_iter_reverse(fdb_tsdb_t db, fdb_tsl_cb cb, void *cb_arg)
                 read_tsl(db, &tsl);
                 /* iterator is interrupted when callback return true */
                 if (cb(&tsl, cb_arg)) {
+#ifdef FDB_LKM
+                    goto _exit;
+#else
                     goto __exit;
+#endif
                 }
             } while ((tsl.addr.index = get_last_tsl_addr(&sector, &tsl)) != FAILED_ADDR);
         } else if (sector.status == FDB_SECTOR_STORE_EMPTY || sector.status == FDB_SECTOR_STORE_UNUSED)
+#ifdef FDB_LKM
+            goto _exit;
+#else
             goto __exit;
+#endif
     } while ((sec_addr = get_last_sector_addr(db, &sector, traversed_len)) != FAILED_ADDR);
 
+#ifdef FDB_LKM
+_exit:
+#else
 __exit:
+#endif
     db_unlock(db);
 }
 
@@ -677,20 +692,36 @@ void fdb_tsl_iter_by_time(fdb_tsdb_t db, fdb_time_t from, fdb_time_t to, fdb_tsl
                                 || (from > to && tsl.time <= from && tsl.time >= to)) {
                             /* iterator is interrupted when callback return true */
                             if (cb(&tsl, cb_arg)) {
+#ifdef FDB_LKM
+                                goto _exit;
+#else
                                 goto __exit;
+#endif
                             }
                         } else {
+#ifdef FDB_LKM
+                            goto _exit;
+#else
                             goto __exit;
+#endif
                         }
                     }
                 } while ((tsl.addr.index = get_tsl_addr(&sector, &tsl)) != FAILED_ADDR);
             }
         } else if (sector.status == FDB_SECTOR_STORE_EMPTY) {
+#ifdef FDB_LKM
+            goto _exit;
+#else
             goto __exit;
+#endif
         }
     } while ((sec_addr = get_sector_addr(db, &sector, traversed_len)) != FAILED_ADDR);
 
+#ifdef FDB_LKM
+_exit:
+#else
 __exit:
+#endif
     db_unlock(db);
 }
 
@@ -929,7 +960,11 @@ fdb_err_t fdb_tsdb_init(fdb_tsdb_t db, const char *name, const char *path, fdb_g
 
     result = _fdb_init_ex((fdb_db_t)db, name, path, FDB_DB_TYPE_TS, user_data);
     if (result != FDB_NO_ERR) {
+#ifdef FDB_LKM
+        goto _exit;
+#else
         goto __exit;
+#endif
     }
 
     /* lock the TSDB */
@@ -951,7 +986,11 @@ fdb_err_t fdb_tsdb_init(fdb_tsdb_t db, const char *name, const char *path, fdb_g
     if (check_sec_arg.check_failed) {
         if (db->parent.not_formatable) {
             result = FDB_READ_ERR;
+#ifdef FDB_LKM
+            goto _exit;
+#else
             goto __exit;
+#endif
         } else {
             tsl_format_all(db);
         }
@@ -998,7 +1037,11 @@ fdb_err_t fdb_tsdb_init(fdb_tsdb_t db, const char *name, const char *path, fdb_g
     /* unlock the TSDB */
     db_unlock(db);
 
+#ifdef FDB_LKM
+_exit:
+#else
 __exit:
+#endif
 
     _fdb_init_finish((fdb_db_t)db, result);
 

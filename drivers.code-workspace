@@ -13,7 +13,10 @@
             "kernel.h": "c",
             "fdb_low_lvl.h": "c",
             "flashdb.h": "c",
-            "time.h": "c"
+            "time.h": "c",
+            "fdb_def.h": "c",
+            "fdb_cfg.h": "c",
+            "ioctl.h": "c"
         }
     }
 }

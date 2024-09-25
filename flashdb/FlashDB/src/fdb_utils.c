@@ -11,8 +11,11 @@
  * Some utils for this library.
  */
 
+#ifndef FDB_LKM
 #include <stdio.h>
 #include <string.h>
+#endif
+
 #include <flashdb.h>
 #include <fdb_low_lvl.h>
 
