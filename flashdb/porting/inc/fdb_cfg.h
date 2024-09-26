@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2022, kaans, <https://github.com/kaans>
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
  * @file
  * @brief configuration file
@@ -11,6 +5,13 @@
 
 #ifndef _FDB_CFG_H_
 #define _FDB_CFG_H_
+
+#include <linux/kernel.h>
+#include <linux/types.h>
+#include <linux/string.h>
+#include <linux/errno.h>
+#include <linux/limits.h>
+#include <linux/stddef.h>
 
 /* using KVDB feature */
 #define FDB_USING_KVDB
@@ -42,14 +43,7 @@
 /* print debug information */
 #define FDB_DEBUG_ENABLE
 
-#ifdef FDB_LKM
 
-#include <linux/kernel.h>
-#include <linux/types.h>
-#include <linux/string.h>
-#include <linux/errno.h>
-#include <linux/limits.h>
-#include <linux/stddef.h>
 
 #define PRId8   "d"
 #define PRId16  "d"
@@ -93,14 +87,8 @@ typedef u64 uint64_t;
 
 typedef long long int intmax_t; // 定义 intmax_t 为内核的 __intmax_t
 
-#ifndef FDB_PRINT
 #define FDB_PRINT(...) printk(__VA_ARGS__)
-#endif
 
 #include <uapi/asm-generic/errno-base.h>
-
-#else /* FDB_LKM */
-#include<sys/ioctl.h>
-#endif
 
 #endif /* _FDB_CFG_H_ */
