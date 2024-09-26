@@ -1,5 +1,7 @@
 #include <fal.h>
 
+#include <linux/mtd/mtd.h>
+
 #define FLASH_SIZE (1 * 1024)
 #define SECTOR_SIZE (1 * 1024)
 #define FAL_PART_MAGIC_WORD (0x45503130)
@@ -11,7 +13,28 @@ extern char partition_name[FAL_DEV_NAME_MAX];
 
 int detech_partition(void)
 {
+    struct mtd_info *mtd = NULL;
+    int i = 0;
+
     parts = (fal_partition_t)flash_mem;
+
+    for (i = 0; i < 64; i++)
+    {
+        mtd = get_mtd_device(NULL, i);
+        if (!IS_ERR(mtd))
+        {
+            printk(KERN_INFO "mtd device found: %s\n", mtd->name);
+            printk(KERN_INFO "\tdevice size: %llu\n", mtd->size);
+            printk(KERN_INFO "\tdevice erasesize: %u\n", mtd->erasesize);
+            printk(KERN_INFO "\tdevice writesize: %u\n", mtd->writesize);
+
+            put_mtd_device(mtd);
+        }
+        else
+        {
+            continue;
+        }
+    }
 
     parts[0].magic_word = FAL_PART_MAGIC_WORD;
     strcpy(parts[0].name, partition_name);
