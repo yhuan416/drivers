@@ -30,7 +30,7 @@ CONFIG_DEBUG_LOGS := y
 
 # porting
 EXTRA_CFLAGS += -I$(PWD)/porting/inc
-MODULE_OBJECTS += porting/fal_flash_virt_parts.o porting/fal_flash_lkm_port.o
+MODULE_OBJECTS += porting/fal_flash_virt_parts.o porting/fal_flash_mem_blk.o
 
 # Fal
 EXTRA_CFLAGS += -I$(FLASHDB_PATH)/port/fal/inc

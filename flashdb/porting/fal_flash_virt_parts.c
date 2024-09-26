@@ -38,19 +38,19 @@ int detech_partition(void)
 
     parts[0].magic_word = FAL_PART_MAGIC_WORD;
     strcpy(parts[0].name, partition_name);
-    strcpy(parts[0].flash_name, NOR_FLASH_DEV_NAME);
+    strcpy(parts[0].flash_name, MEM_FLASH_DEV_NAME);
     parts[0].offset = 0;
     parts[0].len = 32 * 1024;
 
     parts[1].magic_word = FAL_PART_MAGIC_WORD;
     strcpy(parts[1].name, "a");
-    strcpy(parts[1].flash_name, NOR_FLASH_DEV_NAME);
+    strcpy(parts[1].flash_name, MEM_FLASH_DEV_NAME);
     parts[1].offset = 0;
     parts[1].len = 32 * 1024;
 
     parts[2].magic_word = FAL_PART_MAGIC_WORD;
     strcpy(parts[2].name, "b");
-    strcpy(parts[2].flash_name, NOR_FLASH_DEV_NAME);
+    strcpy(parts[2].flash_name, MEM_FLASH_DEV_NAME);
     parts[2].offset = 0;
     parts[2].len = 32 * 1024;
 
