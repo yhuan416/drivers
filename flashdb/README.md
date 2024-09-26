@@ -1,5 +1,7 @@
 
+# 下载改动过的FlashDB源码
 ``` sh
+cd flashdb
 git clone -b dev_lkm git@github.com:yhuan416/FlashDB.git FlashDB
 ```
 
