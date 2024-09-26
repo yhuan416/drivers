@@ -9,13 +9,23 @@
 #include <linux/proc_fs.h>
 #include <linux/err.h>
 
+#include "fal.h"
+
 #ifndef LINUX_KERNEL_VERSION
 #define LINUX_KERNEL_VERSION 510
 #endif
 
+#ifndef DEFAULT_PART_NAME
+#define DEFAULT_PART_NAME "flashdb"
+#endif
+
+char partition_name[FAL_DEV_NAME_MAX] = DEFAULT_PART_NAME;
+module_param_string(part, partition_name, FAL_DEV_NAME_MAX, 0);
+
 static int __init _driver_init(void)
 {
     printk(KERN_INFO "flashdb init\n");
+    printk(KERN_INFO "partition_name: %s\n", partition_name);
 
     return 0;
 }

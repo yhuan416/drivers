@@ -8,20 +8,22 @@
 #include <linux/string.h>
 
 // #define FAL_DEBUG 1
-#define FAL_PART_HAS_TABLE_CFG
+// #define FAL_PART_HAS_TABLE_CFG
 
-#define PART_NAME "flashdb"
+#define NOR_FLASH_DEV_NAME "norflash0"
+#define VIRT_PARTS_FLASH_DEV_NAME "virtparts"
 
-// #define FAL_PART_TABLE_FLASH_DEV_NAME NOR_FLASH_DEV_NAME
-// #define FAL_PART_TABLE_END_OFFSET      65536
+#define FAL_PART_TABLE_FLASH_DEV_NAME VIRT_PARTS_FLASH_DEV_NAME
+#define FAL_PART_TABLE_END_OFFSET ((1 * 1024) - 1)
 
 /* ===================== Flash device Configuration ========================= */
-#define NOR_FLASH_DEV_NAME "norflash0"
 extern const struct fal_flash_dev nor_flash0;
+extern const struct fal_flash_dev virt_parts;
 
 /* flash device table */
 #define FAL_FLASH_DEV_TABLE \
     {                       \
+        &virt_parts,        \
         &nor_flash0,        \
     }
 /* ===================== Flash device Configuration ========================= */
@@ -37,6 +39,7 @@ extern const struct fal_flash_dev nor_flash0;
 #endif /* FAL_PART_HAS_TABLE_CFG */
 /* ====================== Partition Configuration ========================== */
 
+#define PRIdLEAST16 "d"
 
 #define FAL_MALLOC(s) kmalloc(s, GFP_KERNEL)
 #define FAL_CALLOC(n, s) kzalloc((n * s), GFP_KERNEL)
